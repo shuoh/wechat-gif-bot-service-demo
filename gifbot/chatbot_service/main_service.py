@@ -6,4 +6,4 @@ def hello():
     return "Hey, this fucking thing works!"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=80)
