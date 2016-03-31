@@ -2,4 +2,9 @@ Flask==0.10.1
 itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
+pycrypto==2.6.1
+requests==2.9.1
+six==1.10.0
+wechat-sdk==0.6.1
 Werkzeug==0.11.5
+xmltodict==0.10.1
