@@ -71,8 +71,8 @@ def respond_to_user_message_and_event():
     elif isinstance(incoming_data, LinkMessage):
         response_data = wechat_api_client.response_text(u'小样还会链接?!')
     elif isinstance(incoming_data, EventMessage) and incoming_data.type == 'subscribe':
-        greeting_text = u'亲, 我在这等你很久了, 要什么图快说吧. 另外得提一句: 微信这破系统不让我上传图片,\
-        所以我只能先给你发图片链接凑合一下.你可以点击链接浏览并转发图片,小的也只能帮你到这了!'
+        greeting_text = u'亲, 我在这等你很久了, 要什么图快说吧. 另外得提一句: 微信这破系统不让我上传图片, ' \
+            u'所以我只能先给你发图片链接凑合一下. 你可以点击链接浏览并转发图片, 小的也只能帮你到这了!'
         response_data = wechat_api_client.response_text(greeting_text)
 
     return response_data
