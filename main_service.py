@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 from flask import Flask, request
 from gifbot.helpers.wechat_api_helper import wechat_api_client
 from wechat_sdk.messages import TextMessage, ImageMessage, VideoMessage, ShortVideoMessage, LinkMessage, LocationMessage, VoiceMessage, EventMessage
@@ -68,4 +73,4 @@ def respond_to_user_message_and_event():
     return response_data
 
 if __name__ == "__main__":
-    application.run(host='0.0.0.0', port=80)
+    application.run(host='0.0.0.0', port=80, debug=True)
