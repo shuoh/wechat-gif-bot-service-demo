@@ -11,3 +11,11 @@ wechat_api_client_conf = WechatConf(
 )
 
 wechat_api_client = WechatBasic(wechat_api_client_conf)
+
+def upload_wechat_media_by_url(url, wechat=wechat_api_client):
+   """
+   :param url: the URL of the image to be uploaded
+   :param wechat: Wechat API client
+   :return: media ID returned by Wechat
+   """
+   return ''

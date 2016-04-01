@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import sys
+import random
 from flask import Flask, request
-from gifbot.helpers.wechat_api_helper import wechat_api_client
+from gifbot.helpers.wechat_api_helper import wechat_api_client, upload_wechat_media_by_url
+from gifbot.gif_search.search_services import GifSearchService
 from wechat_sdk.messages import TextMessage, ImageMessage, VideoMessage, ShortVideoMessage, LinkMessage, \
     LocationMessage, VoiceMessage, EventMessage
 from wechat_sdk.exceptions import ParseError as WechatSdkParseError
@@ -10,6 +12,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 application = Flask(__name__)
+
 
 @application.route('/', methods=['GET'])
 def acknowledge_wechat_auth_request():
@@ -27,6 +30,7 @@ def acknowledge_wechat_auth_request():
         return echostr
     else:
         return 'Hey hello! What you just said?'
+
 
 @application.route('/', methods=['POST'])
 def respond_to_user_message_and_event():
@@ -53,7 +57,7 @@ def respond_to_user_message_and_event():
     response_data = ''
 
     if isinstance(incoming_data, TextMessage):
-        response_data = wechat_api_client.response_text(u'你说' + incoming_data.content)
+        response_data = respond_to_message_with_gif(incoming_data.content)
     elif isinstance(incoming_data, ImageMessage):
         response_data = wechat_api_client.response_text(u'小样还会发图?!')
     elif isinstance(incoming_data, VoiceMessage):
@@ -71,6 +75,21 @@ def respond_to_user_message_and_event():
         response_data = wechat_api_client.response_text(greeting_text)
 
     return response_data
+
+
+def respond_to_message_with_gif(message):
+
+    search_service = GifSearchService.get_default()
+    urls = search_service.search(message)
+
+    # randomly select one of the images
+    index = random.randint(0, len(urls) - 1)
+    image_url = urls[index]
+
+    # upload image to Wechat
+    media_id = upload_wechat_media_by_url(image_url)
+    return wechat_api_client.response_image(media_id)
+
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', port=80, debug=True)
