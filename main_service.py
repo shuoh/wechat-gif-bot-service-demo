@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 from flask import Flask, request
 from gifbot.helpers.wechat_api_helper import wechat_api_client
-from wechat_sdk.messages import TextMessage, ImageMessage, VideoMessage, ShortVideoMessage, LinkMessage, LocationMessage, VoiceMessage, EventMessage
+from wechat_sdk.messages import TextMessage, ImageMessage, VideoMessage, ShortVideoMessage, LinkMessage, \
+    LocationMessage, VoiceMessage, EventMessage
 from wechat_sdk.exceptions import ParseError as WechatSdkParseError
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 application = Flask(__name__)
 
@@ -33,7 +33,7 @@ def respond_to_user_message_and_event():
     """
     See detail in
     Incoming request when user sends msg - http://mp.weixin.qq.com/wiki/17/f298879f8fb29ab98b2f2971d42552fd.html
-    Incoming request when user subcribes/unscribes - http://mp.weixin.qq.com/wiki/7/9f89d962eba4c5924ed95b513ba69d9b.html
+    Incoming request when user subcribes/unscribes - mp.weixin.qq.com/wiki/7/9f89d962eba4c5924ed95b513ba69d9b.html
     Expected response - http://mp.weixin.qq.com/wiki/17/f298879f8fb29ab98b2f2971d42552fd.html
     """
 
