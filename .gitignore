@@ -1,1 +1,5 @@
+*.pyc
 .idea
+
+# Keep secret config information secret
+gifbot/config/constants.py
