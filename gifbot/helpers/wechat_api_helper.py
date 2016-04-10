@@ -27,16 +27,14 @@ def upload_wechat_media_by_url(url, wechat_client_local=wechat_api_client):
     dot_extension = '.' + extension
 
     # download to file system
-    response = requests.get(url, stream=True)
-    temp_file = tempfile.NamedTemporaryFile(suffix=dot_extension, prefix='gifbot-tmp-image-')
-    shutil.copyfileobj(response.raw, temp_file)
-
-    print type(temp_file.file)
-    print temp_file.file.name
-    # upload to Wechat
-    response = wechat_client_local.upload_media(media_type='image', media_file=temp_file.file, extension=extension)
-    print response
-
+    download_response = requests.get(url, stream=True)
+    temp_file = tempfile.NamedTemporaryFile(suffix=dot_extension, prefix='gifbot-tmp-image-', delete=False)
+    temp_filepath = temp_file.name
+    shutil.copyfileobj(download_response.raw, temp_file)
     temp_file.close()
 
-    return response.get('media_id')
+    # create a new file instance
+    with open(temp_filepath) as media_file:
+        # upload to Wechat
+        response = wechat_client_local.upload_media(media_type='image', media_file=media_file)
+        return response.get('media_id')

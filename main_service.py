@@ -89,9 +89,8 @@ def respond_to_message_with_gif(message):
 
     # upload image to Wechat
     # media_id = upload_wechat_media_by_url(image_url)
-    # return wechat_api_client.response_image(media_id)
-
-    return wechat_api_client.response_text(image_url)
+    media_id = 'tq-2JB1flIU7P6wF9S37GlDoh3s4yIHTzFHADPzD9Pg'
+    return wechat_api_client.response_image(media_id)
 
 
 if __name__ == "__main__":
